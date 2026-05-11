@@ -1,0 +1,149 @@
+/* ── Overlay (per-panel) ──────────────────────────────────────────────────── */
+.sp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 99;
+}
+
+/* ── Panel wrapper ───────────────────────────────────────────────────────── */
+/*   The whole unit (tab + drawer) slides together                            */
+.sp {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+
+  /* Collapsed: only the tab protrudes (drawer width hidden off-screen) */
+  transform: translateX(600px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Open: slide the whole unit (tab + drawer) into view */
+.sp--open {
+  transform: translateX(0);
+}
+
+/* ── Bookmark tab ────────────────────────────────────────────────────────── */
+.sp__tab {
+  position: absolute;
+  left: -37px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+
+  /* background set via inline style (color prop) */
+  color: #fff;
+  border: none;
+  border-radius: 8px 0 0 8px; /* only round the outer-left corners */
+  padding: 14px 10px;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
+  transition: filter 0.2s;
+}
+
+.sp__tab:hover {
+  filter: brightness(1.15);
+}
+
+.sp__tab-icon {
+  font-size: 16px;
+}
+
+.sp__tab-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-weight: 700;
+}
+
+/* ── Drawer ──────────────────────────────────────────────────────────────── */
+.sp__drawer {
+  width: 600px;
+  height: 100%;
+  overflow-y: auto;
+
+  /* background comes from inline style (color prop) */
+  color: #fff;
+  /* no left border-radius — flush against the tab */
+  border-radius: 0;
+
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Drawer header ───────────────────────────────────────────────────────── */
+.sp__drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.sp__close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.sp__close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Drawer body ─────────────────────────────────────────────────────────── */
+.sp__drawer-body {
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  flex: 1;
+}
+
+.sp__drawer-body ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.sp__drawer-body li {
+  margin-bottom: 4px;
+}
+
+/* ── Action button ───────────────────────────────────────────────────────── */
+.sp__action-btn {
+  margin-top: 10px;
+  padding: 7px 16px;
+  background: #7b5ea7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sp__action-btn:hover {
+  background: #6a4f92;
+}
