@@ -11,6 +11,9 @@ export const ConsultReducer = (state, action) => {
     case "SET_DOCUMENT":
       return { ...state, document: action.payload };
     case "CLEAR_DOCUMENT":
+      if (state.document) {
+        URL.revokeObjectURL(state.document);
+      }
       return { ...state, document: null };
     default:
       return state;

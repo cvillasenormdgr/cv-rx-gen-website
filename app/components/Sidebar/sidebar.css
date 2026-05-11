@@ -30,7 +30,8 @@
 /* ── Bookmark tab ────────────────────────────────────────────────────────── */
 .sp__tab {
   position: absolute;
-  left: -37px;
+  right: 100%;
+  left: unset;
 
   display: flex;
   flex-direction: column;

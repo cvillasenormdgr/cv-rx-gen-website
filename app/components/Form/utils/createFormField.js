@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import FormMedicine from "../FormMedicine"
 import FormInput from "../FormInput"
 import FormMessage from "../FormMessage";
+import FormDate from "../FormDate";
 
 const createFormField = ({
   field,
@@ -57,6 +58,12 @@ const createFormField = ({
       return (
         <Fragment key={key}>
           <FormMessage name={name} label={label} />
+        </Fragment>
+      );
+    case "date":
+      return (
+        <Fragment key={key}>
+          <FormDate name={name} label={label} required={required} register={register} errors={errors} />
         </Fragment>
       );
     default:

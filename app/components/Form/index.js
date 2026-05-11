@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useContext, Fragment } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 
 import Navbar from '../Navbar';
@@ -151,8 +151,9 @@ const Form = ({
     try {
       setLoading(true);
       consultDispatch({ type: "CLEAR_DOCUMENT" });
-      const pdf = await generatePdf(enriched);
-      const pdfUrl = URL.createObjectURL(pdf);
+      const pdfBlob = await generatePdf(enriched);
+      const typedBlob = new Blob([pdfBlob], { type: 'application/pdf' }); // ← ensure correct MIME type
+      const pdfUrl = URL.createObjectURL(typedBlob);
       consultDispatch({ type: "SET_DOCUMENT", payload: pdfUrl });
       dispatch({ type: "OPEN_MODAL", payload: "Prescription" });
     } catch (error) {
@@ -165,8 +166,15 @@ const Form = ({
   const generatePdf = async (data) => {
     const response = await fetch('/api/generate-pdf', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' }, // ← missing header
       body: JSON.stringify(data),
     });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+      throw new Error(error?.error ?? `HTTP ${response.status}`);
+    }
+
     const pdf = await response.blob();
     return pdf;
   };
